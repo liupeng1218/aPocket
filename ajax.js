@@ -9,7 +9,7 @@
  */
 
 export default function(path, { type = 'GET', method = 'GET', data = '', success, failure = '' }) {
-    let options {
+    let options = {
         method: method,
         url: path,
         data: data,
@@ -27,9 +27,11 @@ export default function(path, { type = 'GET', method = 'GET', data = '', success
                 return ret
             }
         ]
+        options.method = 'POST'
     }
     if (type == 'file') {
         options.headers = { 'Content-Type': 'multiple/form-data' }
+        options.method = 'POST'
     }
     axios(options).then(function(res) {
         success(res)
