@@ -26,3 +26,4 @@ function IEVersion() {
         return -1; //不是ie浏览器
     }
 }
+
