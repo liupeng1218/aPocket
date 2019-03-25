@@ -1,3 +1,43 @@
+import axios from 'axios'
+import ui from '@/util/msg'
+// create an axios instance
+const ajax = axios.create({
+    timeout: 10000 // request timeout
+})
+
+// request interceptor
+ajax.interceptors.request.use(
+    config => {
+        // Do something before request is sent
+        return config
+    },
+    error => {
+        // Do something with request error
+
+        console.log(error) // for debug
+        Promise.reject(error)
+    }
+)
+
+// // response interceptor
+ajax.interceptors.response.use(
+    
+    response => {
+        // console.log(response)
+        if (response.data.ret != 200) {
+            ui.tips(response.data.msg)
+        }
+        return response
+    },
+
+    error => {
+        console.log('err' + error) // for debug
+        ui.tips(error)
+        return Promise.reject(error)
+    }
+)
+
+
 /* 针对axios设置常用请求方式
     path 请求地址，必填
     其余参数通过对象的解构赋值，至少传递一个空对象
@@ -33,7 +73,7 @@ export default function(path, { type = 'GET', method = 'GET', data = '', success
         options.headers = { 'Content-Type': 'multiple/form-data' }
         options.method = 'POST'
     }
-    axios(options).then(function(res) {
+    ajax(options).then(function(res) {
         success(res)
     }).catch(function(err) {
         if (failure) { failure(res) }
