@@ -99,22 +99,28 @@ function IEVersion() {
     解构 url query
 */
 function parseUrl(url) {
-  if (url) {
-    url = url.substr(url.indexOf("?") + 1);
+   
+  let start = url.indexOf("?");
+  let end = url.indexOf("#");
+  if (start == -1) {
+      return false;
   }
 
-  if (url.length < 1) {
-    return false;
+  if (end !== -1) {
+      url = url.slice(start + 1, end);
+  } else {
+      url = url.slice(start + 1);
   }
   var result = {}, // save name value
-    queryString = url || location.search.substring(1),
-    reg = /([^&=]+)=([^&]*)/g,
-    item;
+      queryString = url || location.search.substring(1),
+      reg = /([^&=]+)=([^&]*)/g,
+      item;
   while ((item = reg.exec(queryString))) {
-    result[decodeURIComponent(item[1])] = decodeURIComponent(item[2]);
+      result[decodeURIComponent(item[1])] = decodeURIComponent(item[2]);
   }
   return result;
 }
+
 export default {
   random: random,
   fileRead: fileRead,
