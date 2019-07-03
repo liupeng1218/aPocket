@@ -6,7 +6,10 @@ export default (function(window) {
    * @returns
    */
   function toK(num) {
-    num = (num || 0).toString()
+    if(!num||typeof num !== 'number'){
+      throw 'Please pass in parameters in numeric format '
+    }
+    num = num.toString()
     var result = ''
     while (num.length > 3) {
       result = ',' + num.slice(-3) + result

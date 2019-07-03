@@ -1,1 +1,0 @@
-!function(a,b){function e(){b.body?b.body.style.fontSize=12*d+"px":b.addEventListener("DOMContentLoaded",e)}function f(){var a=c.clientWidth/10;c.style.fontSize=a+"px"}var c=b.documentElement,d=a.devicePixelRatio||1;e(),f(),a.addEventListener("resize",f),a.addEventListener("pageshow",function(a){a.persisted&&f()})}(window,document);
