@@ -1,23 +1,5 @@
-export default (function(window) {
-  /**
-   * 将数字转为每三位间隔样式
-   *
-   * @param {Number} num
-   * @returns
-   */
-  function toK(num) {
-    if(!num||typeof num !== 'number'){
-      throw 'Please pass in parameters in numeric format '
-    }
-    num = num.toString()
-    var result = ''
-    while (num.length > 3) {
-      result = ',' + num.slice(-3) + result
-      num = num.slice(0, num.length - 3)
-    }
-    if (num) { result = num + result }
-    return result
-  }
+;(function() {
+
 
   /**
    * 获取随机数组成的数组函数
@@ -27,7 +9,7 @@ export default (function(window) {
    * @param {Number} length
    * @returns
    */
-  function random(min, max, length) {
+  function PmathRandom(min, max, length) {
     if (arguments.length > 2) {
       var arr = []
       for (var i = 0; i < length; i++) {
@@ -74,4 +56,4 @@ export default (function(window) {
   }
   window.$Uutil = Uutil
   return Uutil
-})(window)
+}.call(this))
