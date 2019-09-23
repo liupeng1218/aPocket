@@ -8,52 +8,53 @@ const {
   src,
   dest
 } = require('gulp');
-const path = {
+const PATH = {
   srcPath: 'src/',
   proPath: 'app/'
 }
-/* proxy url match */
 
-const sources = []
+/* definition constant */
+
+const ROUTE_ARRAY = []
+const STATIC_DIR = []
 
 // clean dist
 function clean() {
-  return src([path.proPath])
+  return src([PATH.proPath])
     .pipe(plugins.clean());
 }
+
 // copy static
-
-function copyStatic(folder = []) {
-  const globs = path.srcPath + '/?(' + folder.join('|') + ')/**'
-  return src(globs)
-    .pipe(dest(path.proPath))
+function copyStatic() {
+  const path = PATH.srcPath + '/@(' + STATIC_DIR.join('|') + ')/**'
+  return src(path)
+    .pipe(dest(PATH.proPath))
 }
-
 
 // uglify js
 function jsuglify() {
-  return src([path.srcPath + 'script/**', '!' + path.srcPath + 'script/plugin/**', '!' + path.srcPath + 'script/util/**', '!' + path.srcPath + 'script/**/*.json']) // 要压缩的js文件
+  return src([PATH.srcPath + 'script/**']) // 要压缩的js文件
     .pipe(plugins.uglify()) //使用uglify进行压缩
     .pipe(rev())
-    .pipe(dest(path.proPath + 'script/')) //压缩后的路径
+    .pipe(dest(PATH.proPath + 'script/')) //压缩后的路径
     .pipe(rev.manifest())
-    .pipe(dest(path.proPath + '/rev/js'))
+    .pipe(dest(PATH.proPath + '/rev/js'))
 }
 // uglify css
 function cssminify() {
-  return src([path.srcPath + 'css/**/*.css', '!' + path.srcPath + 'css/font-awesome/**']) // 要压缩的css文件
+  return src([PATH.srcPath + 'css/**/*.css']) // 要压缩的css文件
     .pipe(plugins.cleanCss({
       compatibility: 'ie8',
       inline: false
     })) //使用cleanCss进行压缩
     .pipe(rev()) // 文件名加MD5后缀
-    .pipe(dest(path.proPath + 'css')) //压缩后的路径
+    .pipe(dest(PATH.proPath + 'css')) //压缩后的路径
     .pipe(rev.manifest()) // 生成一个rev-manifest.json文件，记录MD5的文件改名前后的对应关系
-    .pipe(dest(path.proPath + '/rev/css')) // 将 rev-manifest.json 保存到 rev
+    .pipe(dest(PATH.proPath + '/rev/css')) // 将 rev-manifest.json 保存到 rev
 }
 // uglify image
 function imagemin() {
-  return src(path.srcPath + 'img/**') // 要压缩的img文件
+  return src(PATH.srcPath + 'img/**') // 要压缩的img文件
     .pipe(plugins.imagemin({
       progressive: true,
       svgoPlugins: [{
@@ -61,52 +62,53 @@ function imagemin() {
       }], //不要移除svg的viewbox属性
       use: [pngquant()] //使用pngquant深度压缩png图片的imagemin插件
     })) //使用imagemin进行压缩
-    .pipe(dest(path.proPath + 'img')); //压缩后的路径
+    .pipe(dest(PATH.proPath + 'img')); //压缩后的路径
 }
 // rev asset
 function revCss() {
-  return src([path.proPath + 'rev/**/*.json', path.proPath + 'css/import*.css'])
+  return src([PATH.proPath + 'rev/**/*.json', PATH.proPath + 'css/import*.css'])
     .pipe(revCollector({
       replaceReved: true,
     }))
-    .pipe(dest(path.proPath + 'css'));
+    .pipe(dest(PATH.proPath + 'css'));
 }
 
 function revJs() {
-  return src([path.proPath + 'rev/**/*.json', path.proPath + 'script/control/import*.js'])
+  return src([PATH.proPath + 'rev/**/*.json', PATH.proPath + 'script/control/import*.js'])
     .pipe(revCollector({
       replaceReved: true,
     }))
-    .pipe(dest(path.proPath + 'script/control'));
+    .pipe(dest(PATH.proPath + 'script/control'));
 }
 
 function revHtml() {
-  return src([path.proPath + 'rev/**/*.json', path.srcPath + '**/*.html'])
+  return src([PATH.proPath + 'rev/**/*.json', PATH.srcPath + '**/*.html'])
     .pipe(revCollector({
       replaceReved: true,
     }))
-    .pipe(dest(path.proPath));
+    .pipe(dest(PATH.proPath));
 }
+
 // clean rev file
 function cleanRev() {
-  return src([path.proPath + 'rev'])
+  return src([PATH.proPath + 'rev'])
     .pipe(plugins.clean());
 }
+
 /**
  * proxy route filter
  * @pathname url
  */
-const filter = function (pathname, req) {
-  const flag = sources.some((item) => {
+const filter = function (pathname) {
+  return ROUTE_ARRAY.some((item) => {
     return pathname.indexOf(item) >= 0
   })
-  return flag
 }
 
 function dev() {
   plugins.connect.server({
     name: 'dev App',
-    root: path.srcPath,
+    root: PATH.srcPath,
     port: 8080,
     livereload: true,
     middleware: function (connect, opt) {
@@ -124,7 +126,7 @@ function dev() {
 function pro() {
   plugins.connect.server({
     name: 'pro App',
-    root: path.proPath,
+    root: PATH.proPath,
     port: 8080,
     middleware: function (connect, opt) {
       return [

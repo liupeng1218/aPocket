@@ -14,17 +14,12 @@
 
 以 `vue-cli` 脚手架 `eslint` 风格为基准配置 `eslint`
 
-# lib
-
-## rem
-
-基于 淘宝rem解决方案 [flexible](https://github.com/amfe/lib-flexible) 定制的 移动端rem解决方案
 
 # util
 
 ## util
 
-定义常用的工具方法
+定义常用的工具方法，使用`UMD`模块规范来兼容不同的模块规范
 
 + random：生成随机数
 + fileRead：图片上传获取文件和预览
