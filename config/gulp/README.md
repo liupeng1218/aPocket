@@ -11,7 +11,9 @@
 `gulp`是基于`node`环境的构建，需先安装 [node](http://nodejs.cn/)，[gulp](https://gulpjs.com/)
 
 `node`及`gulp`安装好之后，运行`npm install`来装所需依赖
+
 ```JSON
+// package.json
 "devDependencies": {
   "gulp": "^4.0.2",
   "gulp-load-plugins": "^1.5.0",
@@ -29,6 +31,8 @@
 ```
 
 ## 结构
+
+项目结构包含两套完整前端资源，以及 `gulp` 和 `package` 配置文件，`src` 目录包含所有源文件，`app` 目录是处理后的目录，可在`gulp`配置中更改目录
 
 ```
 |—— app
