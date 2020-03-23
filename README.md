@@ -8,18 +8,16 @@
 
 ## gulp
 
-以 `gulp` 构建工具搭建的脚手架，实现文件压缩，文件指纹，api代理等
+以 `gulp` 构建工具搭建的脚手架，实现文件压缩，文件指纹，api 代理等
 
 ## vue
 
 以 `vue-cli` 脚手架 `eslint` 风格为基准配置 `eslint`
 
-
 # util
 
-## util
-
-定义常用的工具方法，使用`UMD`模块规范来兼容不同的模块规范
-
-+ random：生成随机数
-+ fileRead：图片上传获取文件和预览
+1. utils：常用的工具方法
+2. regex：正则规则
+3. browser：浏览器操作
+4. date：时间操作
+5. storage：浏览器`storage`操作
