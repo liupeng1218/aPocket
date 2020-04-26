@@ -7,7 +7,7 @@
 1. editor：编辑器通用风格配置
 
 
-## vue
+## vue-cli
 
 以 `vue-cli` 脚手架 `eslint` 风格为基准配置 `eslint`
 
