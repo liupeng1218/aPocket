@@ -21,7 +21,8 @@
   const formatMoney = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
   /**
-   *  截取字符串并加身略号
+   *  截取字符串并加省略号
+   *  @param { string } str
    */
   function subText(str, length) {
     if (str.length === 0) {
